@@ -1,1 +1,29 @@
+import requests
+
+# Configuración de credenciales
+client_id = 'TU_CLIENT_ID'
+client_secret = 'TU_CLIENT_SECRET'
+refresh_token = 'TU_REFRESH_TOKEN'
+
+# URL del token
+token_url = 'https://api.amazon.com/auth/o2/token'
+
+# Función para obtener el token de acceso
+def get_access_token():
+    payload = {
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token,
+        'client_id': client_id,
+        'client_secret': client_secret
+    }
+
+    response = requests.post(token_url, data=payload)
+    if response.status_code == 200:
+        return response.json().get('access_token')
+    else:
+        raise Exception(f"Error al obtener el token: {response.status_code}")
+
+# Obtén el token de acceso
+access_token = get_access_token()
+print(f"Access Token: {access_token}")
 
