@@ -1,0 +1,29 @@
+import requests
+import json
+
+# URL del endpoint de la API de pedidos
+orders_url = 'https://sellingpartnerapi-na.amazon.com/orders/v0/orders'
+
+# Cabeceras de la solicitud
+headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {access_token}',
+    'x-amz-access-token': access_token
+}
+
+# Parámetros de la solicitud
+params = {
+    'MarketplaceIds': 'ATVPDKIKX0DER',  # ID del marketplace
+    'CreatedAfter': '2023-01-01T00:00:00Z'
+}
+
+# Realizar la solicitud
+response = requests.get(orders_url, headers=headers, params=params)
+
+# Manejar la respuesta
+if response.status_code == 200:
+    orders = response.json()
+    print(json.dumps(orders, indent=4))
+else:
+    print(f'Error: {response.status_code}')
+    print(response.json())
